@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSA Visualizer — Sorting Algorithms</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NOISE OVERLAY ===== -->
+  <div class="noise-overlay"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">DSA</span>
+        <span class="logo-sub">visualizer</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <p class="tagline">Watch algorithms think in real-time</p>
+    </div>
+    <div class="header-right">
+      <div class="stat-chip" id="comparisons-display">
+        <span class="stat-label">comparisons</span>
+        <span class="stat-value" id="comparison-count">0</span>
+      </div>
+      <div class="stat-chip" id="swaps-display">
+        <span class="stat-label">swaps</span>
+        <span class="stat-value" id="swap-count">0</span>
+      </div>
+      <div class="stat-chip" id="time-display">
+        <span class="stat-label">time</span>
+        <span class="stat-value" id="time-count">0ms</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-wrapper">
+
+    <!-- ===== SIDEBAR CONTROLS ===== -->
+    <aside class="sidebar">
+
+      <!-- Algorithm Picker -->
+      <section class="control-section">
+        <h3 class="section-title"><span class="dot"></span> Algorithm</h3>
+        <div class="algo-buttons">
+          <button class="algo-btn active" data-algo="bubble">
+            <span class="algo-icon">◉</span>
+            <span class="algo-name">Bubble</span>
+            <span class="algo-complexity">O(n²)</span>
+          </button>
+          <button class="algo-btn" data-algo="merge">
+            <span class="algo-icon">◈</span>
+            <span class="algo-name">Merge</span>
+            <span class="algo-complexity">O(n log n)</span>
+          </button>
+          <button class="algo-btn" data-algo="quick">
+            <span class="algo-icon">◇</span>
+            <span class="algo-name">Quick</span>
+            <span class="algo-complexity">O(n log n)</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Array Size -->
+      <section class="control-section">
+        <h3 class="section-title"><span class="dot"></span> Array Size</h3>
+        <div class="slider-wrapper">
+          <input type="range" id="size-slider" min="10" max="100" value="40" class="custom-slider"/>
+          <div class="slider-labels">
+            <span>10</span>
+            <span id="size-value">40</span>
+            <span>100</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Speed -->
+      <section class="control-section">
+        <h3 class="section-title"><span class="dot"></span> Speed</h3>
+        <div class="speed-buttons">
+          <button class="speed-btn" data-speed="200">0.5×</button>
+          <button class="speed-btn active" data-speed="80">1×</button>
+          <button class="speed-btn" data-speed="30">2×</button>
+          <button class="speed-btn" data-speed="5">5×</button>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <section class="control-section actions">
+        <button class="action-btn primary" id="start-btn">
+          <span class="btn-icon">▶</span> Start Sort
+        </button>
+        <button class="action-btn secondary" id="generate-btn">
+          <span class="btn-icon">⟳</span> New Array
+        </button>
+        <button class="action-btn danger" id="reset-btn">
+          <span class="btn-icon">■</span> Reset
+        </button>
+      </section>
+
+      <!-- Info Panel -->
+      <section class="control-section info-panel">
+        <h3 class="section-title"><span class="dot"></span> About</h3>
+        <div class="algo-info" id="algo-info">
+          <p class="algo-desc" id="algo-desc">
+            Bubble Sort repeatedly steps through the list, compares adjacent elements and swaps them if they're in the wrong order.
+          </p>
+          <div class="complexity-grid">
+            <div class="complexity-item">
+              <span class="c-label">Best</span>
+              <span class="c-value" id="best-case">O(n)</span>
+            </div>
+            <div class="complexity-item">
+              <span class="c-label">Avg</span>
+              <span class="c-value" id="avg-case">O(n²)</span>
+            </div>
+            <div class="complexity-item">
+              <span class="c-label">Worst</span>
+              <span class="c-value" id="worst-case">O(n²)</span>
+            </div>
+            <div class="complexity-item">
+              <span class="c-label">Space</span>
+              <span class="c-value" id="space-case">O(1)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- ===== VISUALIZER AREA ===== -->
+    <section class="visualizer-area">
+
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-left">
+          <div class="status-dot" id="status-dot"></div>
+          <span class="status-text" id="status-text">Ready to visualize</span>
+        </div>
+        <div class="status-right">
+          <span class="algo-badge" id="algo-badge">BUBBLE SORT</span>
+        </div>
+      </div>
+
+      <!-- Bars Canvas -->
+      <div class="bars-container" id="bars-container">
+        <!-- Bars will be injected by JS -->
+      </div>
+
+      <!-- Legend -->
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-bar-default)"></div>
+          <span>Unsorted</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-compare)"></div>
+          <span>Comparing</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-swap)"></div>
+          <span>Swapping</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-sorted)"></div>
+          <span>Sorted</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-pivot)"></div>
+          <span>Pivot</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ===== COMPLETION MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-icon">✓</span>
+        <h2 class="modal-title">Sorted!</h2>
+      </div>
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <span class="ms-label">Algorithm</span>
+          <span class="ms-value" id="modal-algo">Bubble Sort</span>
+        </div>
+        <div class="modal-stat">
+          <span class="ms-label">Array Size</span>
+          <span class="ms-value" id="modal-size">40</span>
+        </div>
+        <div class="modal-stat">
+          <span class="ms-label">Comparisons</span>
+          <span class="ms-value" id="modal-comparisons">0</span>
+        </div>
+        <div class="modal-stat">
+          <span class="ms-label">Swaps</span>
+          <span class="ms-value" id="modal-swaps">0</span>
+        </div>
+        <div class="modal-stat">
+          <span class="ms-label">Time Taken</span>
+          <span class="ms-value" id="modal-time">0ms</span>
+        </div>
+      </div>
+      <button class="modal-close-btn" id="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="js/bubble.js"></script>
+  <script src="js/merge.js"></script>
+  <script src="js/quick.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
