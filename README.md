@@ -2,7 +2,6 @@
 
 > Watch sorting algorithms think in real-time. A sleek, interactive visualizer for Bubble Sort, Merge Sort, and Quick Sort — built with vanilla HTML, CSS, and JavaScript.
 
-![DSA Visualizer Screenshot](https://via.placeholder.com/900x500/0a0a0f/00f5a0?text=DSA+Visualizer)
 
 ---
 
