@@ -1,6 +1,6 @@
 # 🔢 DSA Visualizer
 
-> Watch sorting algorithms think in real-time. A sleek, interactive visualizer for Bubble Sort, Merge Sort, and Quick Sort — built with vanilla HTML, CSS, and JavaScript.
+> Watch sorting algorithms think in real time. A sleek, interactive visualizer for Bubble Sort, Merge Sort, and Quick Sort built with vanilla HTML, CSS, and JavaScript.
 
 
 ---
@@ -70,7 +70,7 @@ dsa-visualizer/
 
 ## 🧠 How It Works
 
-Each sorting algorithm runs **completely** on the original array first, recording every comparison and swap as a "frame" in an animation queue. Then, the visualizer **replays** that queue with configurable delays — updating bar heights and colors to reflect each state.
+Each sorting algorithm runs **completely** on the original array first, recording every comparison and swap as a "frame" in an animation queue. Then, the visualizer **replays** that queue with configurable delays, updating bar heights and colors to reflect each state.
 
 This two-phase approach ensures:
 - The animation speed slider works correctly (no re-sorting needed)
